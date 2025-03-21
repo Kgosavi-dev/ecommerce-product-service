@@ -1,4 +1,4 @@
-package com.secor.restroservice;
+package com.secor.ecommerceproductservice;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
