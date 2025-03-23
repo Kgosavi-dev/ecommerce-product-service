@@ -15,49 +15,37 @@ public class MainRestController {
     private static final Logger log = LoggerFactory.getLogger(MainRestController.class);
 
     @Autowired
-    RestroRepository restroRepository;
+    ProductRepository productRepository;
     @Autowired
     AuthService authService;
     @Autowired
     MenuRepository menuRepository;
 
 
-    @PostMapping("create/restro")
-    public ResponseEntity<?> createRestro(@RequestBody Restro restro,
+    @PostMapping("create/product")
+    public ResponseEntity<?> createProduct(@RequestBody Product product,
                                            @RequestHeader("Authorization") String token)
     {
-        log.info("Received request to create restro: {}", restro);
+        log.info("Received request to create product: {}", product);
         if(!authService.validateToken(token))
         {
             log.info("Invalid token: {}", token);
             return ResponseEntity.badRequest().body("Invalid token");
         }
         log.info("Token is valid: {}", token);
-        log.info("Saving restro: {}", restro);
+        log.info("Saving product: {}", product);
 
-        restro.setRestroid(String.valueOf(new Random().nextInt(1000)));
-        restroRepository.save(restro);
+        product.setProductid(String.valueOf(new Random().nextInt(1000)));
+        productRepository.save(product);
 
-        return ResponseEntity.ok("Restro created successfully");
+        return ResponseEntity.ok("Product created successfully");
     }
 
-    @PostMapping("create/menuitem")
-    public ResponseEntity<?> createMenuItem(@RequestBody MenuItem menuItem,
-                                            @RequestHeader("Authorization") String token)
+    @GetMapping("get/product/{productid}")
+    public ResponseEntity<?> getOrder(@PathVariable("productid") String productid)
     {
-        log.info("Received request to create menu item: {}", menuItem);
-        if(!authService.validateToken(token))
-        {
-            log.info("Invalid token: {}", token);
-            return ResponseEntity.badRequest().body("Invalid token");
-        }
-        log.info("Token is valid: {}", token);
-        log.info("Saving menu item: {}", menuItem);
-
-        menuItem.setItemid(String.valueOf(new Random().nextInt(1000)));
-        menuRepository.save(menuItem);
-
-        return ResponseEntity.ok("Menu item created successfully");
+        Product product = productRepository.findById(productid).get();
+        return ResponseEntity.ok(product);
     }
 
 }

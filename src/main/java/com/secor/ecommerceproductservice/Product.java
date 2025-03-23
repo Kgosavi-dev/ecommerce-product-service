@@ -5,13 +5,15 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "restros")
+@Document(collection = "products")
 @Getter @Setter
-public class Restro {
+public class Product {
 
     @Id
-    private String restroid;
+    private String productid;
     private String name;
-    private String owner;
+    private String description;
+    private Double price;
+    private String category;
 
 }

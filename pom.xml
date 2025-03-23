@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.secor</groupId>
-    <artifactId>restro-service</artifactId>
+    <artifactId>product-service</artifactId>
     <version>prod-1</version>
-    <name>restro-service</name>
-    <description>restro-service</description>
+    <name>product-service</name>
+    <description>product-service</description>
     <url/>
     <licenses>
         <license/>
