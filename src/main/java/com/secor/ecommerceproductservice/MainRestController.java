@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
@@ -42,10 +43,31 @@ public class MainRestController {
     }
 
     @GetMapping("get/product/{productid}")
-    public ResponseEntity<?> getOrder(@PathVariable("productid") String productid)
+    public ResponseEntity<?> getProduct(@PathVariable("productid") String productid)
     {
         Product product = productRepository.findById(productid).get();
         return ResponseEntity.ok(product);
     }
+
+
+//    public List<Product> searchProducts(String name, String category) {
+//        List<Product> matchingProducts = new ArrayList<>();
+//        for (Product product : products) {
+//            if ((name == null || product.getName().equalsIgnoreCase(name)) &&
+//                    (category == null || product.getCategory().equalsIgnoreCase(category))) {
+//                matchingProducts.add(product);
+//            }
+//        }
+//        return matchingProducts;
+//    }
+
+    @GetMapping("/products/search")
+    public List<Product> searchProducts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category) {
+//        return productService.searchProducts(name, category);
+        return productRepository.findByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(name != null ? name : "", category != null ? category : "");
+    }
+
 
 }

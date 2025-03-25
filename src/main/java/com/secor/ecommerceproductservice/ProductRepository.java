@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProductRepository extends MongoRepository<Product, String> {
     List<Product> getDistinctFirstByCategory(String category);
+    List<Product> findByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category);
+
 }
